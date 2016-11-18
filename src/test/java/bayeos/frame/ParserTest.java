@@ -21,7 +21,7 @@ public class ParserTest {
 	
 	private static final Long ts = 1457222400000L;
 	private static final String origin = "Site-1";
-	private static final Integer rssi = 0;
+	private static final Integer rssi = null;
 	
 
 	@Test

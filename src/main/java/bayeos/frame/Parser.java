@@ -7,6 +7,7 @@ import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class Parser {
 	
 
 	public static Map<String, Object> parseBase64(String base64) throws FrameParserException {
-		return parseBase64(base64,new Date(),"", 0);
+		return parseBase64(base64,new Date(),"", null);
 	}
 	
 	public static Map<String, Object> parseBase64(String base64, Date ts, String origin, Integer rssi) throws FrameParserException{
@@ -30,7 +31,7 @@ public class Parser {
 	}
 	
 	public static Map<String, Object> parseFile(String path) throws FrameParserException, IOException {
-		return parseFile(path,new Date(),"",0);
+		return parseFile(path,new Date(),"",null);
 	}
 	
 	public static Map<String, Object> parseFile(String path, Date ts, String origin, Integer rssi) throws FrameParserException, IOException{
@@ -41,12 +42,12 @@ public class Parser {
 	}
 	
 	public static Map<String, Object> parseByteBuffer(ByteBuffer bf) throws FrameParserException {
-		return parseByteBuffer(bf, new Date(),"", 0);
+		return parseByteBuffer(bf, new Date(),"", null);
 	}
 
 	public static Map<String, Object> parseByteBuffer(ByteBuffer bf, Date ts, String origin, Integer rssi)
 			throws FrameParserException {
-		Hashtable<String, Object> result = new Hashtable<>();
+		Map<String, Object> result = new HashMap(10);
 		result.put("ts", ts.getTime() * 1000 * 1000);
 		result.put("origin", origin);
 		result.put("rssi", rssi);
@@ -57,7 +58,7 @@ public class Parser {
 
 	
 	// Private methods
-	private static void parseData(ByteBuffer bf, Hashtable<String, Object> result) throws FrameParserException {
+	private static void parseData(ByteBuffer bf, Map<String, Object> result) throws FrameParserException {
 		short myId;
 		short panId;
 		int rssi;
@@ -115,10 +116,15 @@ public class Parser {
 				b = new StringBuffer((String)result.get("origin"));
 				b.append("/XBee").append(panId).append(":").append(myId);
 				result.put("origin", b.toString());				
-				rssi = (bf.get() & 0xff);
-				if (rssi >  (int)result.get("rssi") ){
+				rssi = (bf.get() & 0xff);				
+				
+				if (result.get("rssi") == null) {
 					result.put("rssi", rssi);
-				}	
+				} else {
+					if (rssi > (int)result.get("rssi") ){
+						result.put("rssi", rssi);
+					}						
+				}
 				parseData(bf, result);
 				break;
 			case 0x9:
@@ -192,7 +198,7 @@ public class Parser {
 
 	}
 
-	private static void parseDataFrame(ByteBuffer bf, Hashtable<String, Object> result) throws FrameParserException {
+	private static void parseDataFrame(ByteBuffer bf, Map<String, Object> result) throws FrameParserException {
 
 		byte dataType = bf.get();
 
