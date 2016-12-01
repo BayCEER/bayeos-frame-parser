@@ -4,10 +4,13 @@ package bayeos.frame;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.junit.Test;
 
@@ -60,16 +63,21 @@ public class ParserTest {
 	
 	@Test
 	public void testInvalidFrames(){
-		String[] frames = new String[]{"B9jWAAANAlAxiKU1AQ8BAwDbtcANDAJrJukAAAD4AUAC","B/DSAAANAlAx+Lw1AQ8BAwDbtcANDAJrJukAAAD4AUAC","B/DSAAANAlA0iBMAAA8BAwCskpoNYAKjIdkAEgAUAlAC"};
-		for (String f : frames) {
-			try {
-				@SuppressWarnings("unused")
-				Map<String,Object> ret = Parser.parseBase64(f);
-				fail("Invalid frame type exception expected.");
-			} catch (FrameParserException e) {
-				System.out.println(e.getMessage());
-			}
+		File resourcesDirectory = new File("src/test/resources");
+		File[] files = resourcesDirectory.listFiles();
+		for (File file : files) {
+			if (file.getName().endsWith(".invalid")) {			
+				try {
+					Parser.parseFile(file.getPath());
+					fail("No exception for invalid frame:" + file.getPath());
+				} catch (FrameParserException e){ 
+					System.out.println("Invalid frame " + file.getPath() +  " threw expected exception: " + e.getMessage());
+				} catch (IOException e) {
+					fail(e.getMessage());
+				}
+			}			
 		}
+				
 	}
 	
 	
