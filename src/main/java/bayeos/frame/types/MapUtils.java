@@ -39,6 +39,26 @@ public class MapUtils {
 		Object o = engine.get("map");			
 		return (Map<String, T>) o; 
 	}
+	
+	public static String toString(Map<String,Object> map){
+		boolean first = true;
+		StringBuffer n = new StringBuffer("var map = {");
+		for (Map.Entry<String, Object> e: map.entrySet()){
+			if (!first){
+				n.append(",");
+			} else {
+				first = false;
+			}			
+			n.append("'").append(e.getKey()).append("':");			
+			if ( e.getValue() instanceof Number) {
+				n.append(e.getValue());
+			} else {
+				n.append("'").append(e.getValue()).append("'");
+			}						
+		}
+		n.append("}");
+		return n.toString();
+	}
 			
 
 }

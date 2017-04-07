@@ -4,13 +4,10 @@ package bayeos.frame;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.junit.Test;
 

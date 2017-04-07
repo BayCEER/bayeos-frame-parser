@@ -33,17 +33,17 @@ public enum NumberType {
 			
 			switch(index) {			
 			case 0x1:
-				return ByteArray.toByteFloat32((Float)value);
+				return ByteArray.toByteFloat32(value.floatValue());
 			case 0x2:
-				return ByteArray.toByteInt32((Integer) value);
+				return ByteArray.toByteInt32(value.intValue());
 			case 0x3:
-				return ByteArray.toByteInt16((Short)value);
+				return ByteArray.toByteInt16(value.shortValue());
 			case 0x4:
 				byte[] b = new byte[1];
 				b[0] = value.byteValue();
 				return b;			
 			case 0x5:
-				return ByteArray.toByteUInt32((Long)value);
+				return ByteArray.toByteUInt32(value.longValue());
 			case 0x6:				
 			
 			default:
