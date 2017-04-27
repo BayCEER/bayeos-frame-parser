@@ -2,6 +2,7 @@ package bayeos.frame;
 
 
 import java.io.IOException;
+import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
@@ -67,6 +68,10 @@ public class Parser {
 		long delay;
 		int length;
 		
+		Map<String,Object> value;
+		
+		try {
+		
 		while (bf.remaining() > 1) {
 			byte ft = bf.get();
 			
@@ -77,13 +82,17 @@ public class Parser {
 				break;
 			case 0x2:
 				result.put("type", "Command");
-				result.put("cmd", bf.get());
-				result.put("value", getRemaining(bf));
+				value = new Hashtable<>();
+				value.put("cmd", bf.get());
+				value.put("value", getRemaining(bf));
+				result.put("value", value);
 				break;
 			case 0x3:
 				result.put("type", "CommandResponse");
-				result.put("cmd", bf.get());
-				result.put("value", getRemaining(bf));
+				value = new Hashtable<>();				
+				value.put("cmd", bf.get());
+				value.put("value", getRemaining(bf));
+				result.put("value", value);
 				break;
 			case 0x4:
 				result.put("type", "Message");
@@ -136,9 +145,11 @@ public class Parser {
 			case 0xa:
 				// BinaryFrame
 				result.put("type", "BinaryFrame");				
-				Long d = ByteArray.fromByteUInt32(bf);
-				result.put("pos", d);							
-				result.put("value",getRemaining(bf));
+				Long d = ByteArray.fromByteUInt32(bf);				
+				value = new Hashtable<>();					
+				value.put("pos", d);							
+				value.put("value",getRemaining(bf));
+				result.put("value", value);
 				break;
 			case 0xb:
 				// OriginFrame
@@ -194,6 +205,10 @@ public class Parser {
 			default:
 				throw new InvalidFrameTypeException("Invalid frame type:" + ByteArray.toString(ft));
 			}
+		}
+		
+		} catch (BufferUnderflowException e){			
+			throw new IncompleteFrameException("Failed to read frame.");
 		}
 
 	}
@@ -261,7 +276,7 @@ public class Parser {
 				throw new InvalidValueTypeException("Invalid value type:" + ByteArray.toString(valueType));
 			}
 		}		
-		result.put("data", values);
+		result.put("value", values);
 	}
 
 	
