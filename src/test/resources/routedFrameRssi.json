@@ -1,1 +1,1 @@
-{"data":{"1":10,"2":9,"3":2,"4":3,"5":4},"origin":"Site-1/XBee3000:33","rssi":0,"ts":1457222400000000000,"type":"DataFrame","validchecksum":false}
+{"origin":"bti3xb/XBee3000:33","rssi":0,"ts":946684800000000000,"type":"DataFrame","validchecksum":false,"value":{"1":10,"2":9,"3":2,"4":3,"5":4}}

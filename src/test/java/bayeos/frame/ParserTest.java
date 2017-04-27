@@ -18,11 +18,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ParserTest {
 
 	
-	
-	private static final Long ts = 1457222400000L;
-	private static final String origin = "Site-1";
-	private static final Integer rssi = null;
-	
+								   
+							   
+	private static final Long ts = 946684800000L; // 2000-01-01 00:00:00.000+00
+	private static final String origin = "bti3xb";
+	private static final Integer rssi = 0;	
 
 	@Test
 	public void testValidFiles() throws ParseException, JsonParseException, JsonMappingException, IOException {
@@ -77,7 +77,5 @@ public class ParserTest {
 				
 	}
 	
-	
-
 
 }

@@ -1,1 +1,1 @@
-{"data":{"1":11,"2":21,"4":41},"origin":"Site-1","rssi":null,"ts":1457222400000000000,"type":"DataFrame","validchecksum":false}
+{"origin":"bti3xb","rssi":0,"ts":946684800000000000,"type":"DataFrame","validchecksum":false,"value":{"1":11,"2":21,"4":41}}
