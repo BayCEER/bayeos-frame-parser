@@ -42,7 +42,7 @@ public class MapUtils {
 	
 	public static String toString(Map<String,Object> map){
 		boolean first = true;
-		StringBuffer n = new StringBuffer("var map = {");
+		StringBuffer n = new StringBuffer("{");
 		for (Map.Entry<String, Object> e: map.entrySet()){
 			if (!first){
 				n.append(",");
