@@ -77,5 +77,20 @@ public class ParserTest {
 				
 	}
 	
+	
+	@Test 
+	public void testInvalidBase64(){
+				
+		String frame = "DPMDEXRdAQAACxBCT0QtVC1WZXJzdWNoLzNCAUEDAAChQQEAAKNBAvp-nEEL4XpEPwQAAKZB";
+		
+		try {
+			Parser.parseBase64(frame);
+		} catch (FrameParserException e) {
+			System.out.println(e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 }

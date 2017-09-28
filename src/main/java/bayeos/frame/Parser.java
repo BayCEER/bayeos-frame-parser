@@ -19,6 +19,13 @@ import bayeos.binary.CheckSum;
 
 public class Parser {
 	
+	
+	public static Map<String,Object> parse(byte[] b) throws FrameParserException {
+		ByteBuffer bf  = ByteBuffer.wrap(b);
+		bf.order(ByteOrder.LITTLE_ENDIAN);
+		return parseByteBuffer(bf);
+	}
+	
 
 	public static Map<String, Object> parseBase64(String base64) throws FrameParserException {
 		return parseBase64(base64,new Date(),"", null);
