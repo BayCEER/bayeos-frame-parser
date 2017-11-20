@@ -7,6 +7,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -20,10 +23,18 @@ import bayeos.binary.CheckSum;
 public class Parser {
 	
 	
+	
 	public static Map<String,Object> parse(byte[] b) throws FrameParserException {
 		ByteBuffer bf  = ByteBuffer.wrap(b);
 		bf.order(ByteOrder.LITTLE_ENDIAN);
 		return parseByteBuffer(bf);
+	}
+	
+	
+	public static Map<String,Object> parse(byte[] b, Date ts, String origin, Integer rssi) throws FrameParserException {
+		ByteBuffer bf  = ByteBuffer.wrap(b);
+		bf.order(ByteOrder.LITTLE_ENDIAN);
+		return parseByteBuffer(bf,ts,origin,rssi);
 	}
 	
 
