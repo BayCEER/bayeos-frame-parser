@@ -7,9 +7,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -21,8 +18,6 @@ import bayeos.binary.ByteArray;
 import bayeos.binary.CheckSum;
 
 public class Parser {
-	
-	
 	
 	public static Map<String,Object> parse(byte[] b) throws FrameParserException {
 		ByteBuffer bf  = ByteBuffer.wrap(b);
@@ -66,7 +61,7 @@ public class Parser {
 
 	public static Map<String, Object> parseByteBuffer(ByteBuffer bf, Date ts, String origin, Integer rssi)
 			throws FrameParserException {
-		Map<String, Object> result = new HashMap(10);
+		Map<String, Object> result = new HashMap<String, Object>(10);
 		result.put("ts", ts.getTime() * 1000 * 1000);
 		result.put("origin", origin);
 		result.put("rssi", rssi);
@@ -130,12 +125,13 @@ public class Parser {
 				parseData(bf, result);
 				break;
 			case 0x7:
-				// DelayedFrame
-				ts = (long) result.get("ts");
-				delay = ByteArray.fromByteUInt32(bf) * 1000 * 1000;				
+			case 0x10:				
+				// DelayedFrame and DelayedSecondFrame 
+				ts = (long) result.get("ts");				
+				delay = ByteArray.fromByteUInt32(bf) * 1000 * 1000 * ((ft==0x10)?1000:1);			
 				result.put("ts", ts - delay);
 				parseData(bf, result);
-				break;
+				break;																	
 			case 0x8:
 				// RoutedFrameRSSI
 				myId = bf.getShort();
@@ -159,7 +155,7 @@ public class Parser {
 				ts = ByteArray.fromByteUInt32(bf);
 				result.put("ts", DateAdapter.getDate(ts).getTime() * 1000 * 1000);
 				parseData(bf, result);
-				break;
+				break;			
 			case 0xa:
 				// BinaryFrame
 				result.put("type", "BinaryFrame");				
