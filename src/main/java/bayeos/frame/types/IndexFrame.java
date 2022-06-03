@@ -15,7 +15,7 @@ public class IndexFrame implements ByteFrame  {
 		
 	public IndexFrame(NumberType numberType, Number...values){
 		this.numberType = numberType;		
-		HashMap<Integer, Number> v = new HashMap<>();
+		HashMap<Integer, Number> v = new HashMap<Integer, Number>();
 		for(int i=0;i<values.length;i++){
 			v.put(i+1, values[i]);			
 		}

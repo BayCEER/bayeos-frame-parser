@@ -14,7 +14,7 @@ public class CheckSumFrame implements ByteFrame{
 		payload = frame.getBytes();
 	}
 				
-	@Override
+	
 	public byte[] getBytes() {
 		byte[] n = new byte[3 + payload.length];
 		ByteBuffer bf = ByteBuffer.wrap(n);

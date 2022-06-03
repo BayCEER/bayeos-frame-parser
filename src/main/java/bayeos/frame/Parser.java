@@ -95,14 +95,14 @@ public class Parser {
 				break;
 			case 0x2:
 				result.put("type", "Command");
-				value = new Hashtable<>();
+				value = new Hashtable();
 				value.put("cmd", bf.get());
 				value.put("value", getRemaining(bf));
 				result.put("value", value);
 				break;
 			case 0x3:
 				result.put("type", "CommandResponse");
-				value = new Hashtable<>();				
+				value = new Hashtable();				
 				value.put("cmd", bf.get());
 				value.put("value", getRemaining(bf));
 				result.put("value", value);
@@ -127,7 +127,7 @@ public class Parser {
 			case 0x7:
 			case 0x10:				
 				// DelayedFrame and DelayedSecondFrame 
-				ts = (long) result.get("ts");				
+				ts = (Long) result.get("ts");				
 				delay = ByteArray.fromByteUInt32(bf) * 1000 * 1000 * ((ft==0x10)?1000:1);			
 				result.put("ts", ts - delay);
 				parseData(bf, result);
@@ -144,7 +144,7 @@ public class Parser {
 				if (result.get("rssi") == null) {
 					result.put("rssi", rssi);
 				} else {
-					if (rssi > (int)result.get("rssi") ){
+					if (rssi > (Integer)result.get("rssi") ){
 						result.put("rssi", rssi);
 					}						
 				}
@@ -160,7 +160,7 @@ public class Parser {
 				// BinaryFrame
 				result.put("type", "BinaryFrame");				
 				Long d = ByteArray.fromByteUInt32(bf);				
-				value = new Hashtable<>();					
+				value = new Hashtable();					
 				value.put("pos", d);							
 				value.put("value",getRemaining(bf));
 				result.put("value", value);
