@@ -54,7 +54,13 @@ public class FrameConstants {
 	public static final byte FrameWithLabel = 0x60;
 		
 		     
-
+	/* 
+	 * @since 1.4 
+	 */
+	public static final byte BoardCommand = 0x12; /* [0x12][Key][Payload] */ 
+	public static final byte BoardCommandResponse = 0x13; /*[0x13][Key][Status][Payload]*/	
+	public static final byte CommandSuccess = 0x0;
+	public static final byte CommandFailed = 0x1;
 	
 	
 	public final static String getFrameName(byte value){
@@ -73,6 +79,8 @@ public class FrameConstants {
 		case MillisecondTimestampFrame: return "MillisecondTimestampFrame";
 		case RoutedOriginFrame: return "RoutedOriginFrame";
 		case ChecksumFrame: return "ChecksumFrame";
+		case BoardCommand: return "BoardCommand";
+		case BoardCommandResponse: return "BoardCommandResponse";
 		
 		default:
 			return "Unknown";

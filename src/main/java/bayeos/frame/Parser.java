@@ -195,8 +195,22 @@ public class Parser {
 				result.put("origin", b.toString());
 				parseData(bf, result);
 				break;
-			case 0xe:
-				// GatewayCommand
+			case 0x12:
+				// BoardCommand				
+				result.put("type", "BoardCommand");
+				value = new Hashtable();
+				value.put("kind", bf.get());
+				value.put("payload", getRemaining(bf));
+				result.put("value", value);
+				break;				
+			case 0x13:
+				// BoardCommandResponse
+				result.put("type", "BoardCommandResponse");
+				value = new Hashtable();				
+				value.put("kind", bf.get());
+				value.put("status", bf.get());
+				value.put("payload", getRemaining(bf));
+				result.put("value", value);				
 				break;
 			case 0xf:
 				// ChecksumFrame
