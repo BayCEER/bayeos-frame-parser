@@ -15,6 +15,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.unibayreuth.bayceer.bayeos.frame.FrameParserException;
+import de.unibayreuth.bayceer.bayeos.frame.Parser;
+
 public class ParserTest {
 
 	
